@@ -3,15 +3,15 @@ import {
   ValidatorConstraintInterface,
   ValidationArguments,
 } from 'class-validator';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { PrismaService } from '../../service/prisma.service';
 
-@Injectable()
 @ValidatorConstraint({ async: true })
+@Injectable()
 export class IsUsernameNotEmailValidator
   implements ValidatorConstraintInterface
 {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(@Inject(PrismaService) private prisma: PrismaService) {}
 
   async validate(
     username: string,
@@ -19,6 +19,9 @@ export class IsUsernameNotEmailValidator
   ): Promise<boolean> {
     if (!args) {
       console.log(args);
+    }
+    if (typeof this.prisma == 'undefined') {
+      this.prisma = new PrismaService();
     }
     const user = await this.prisma.user.findFirst({
       where: { username: username },

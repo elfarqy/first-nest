@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty } from 'class-validator';
+import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
 import { IsUsernameNotEmail } from '../decorator/is-not-exist.decorator';
 
 export class CreateUserDto {
@@ -9,5 +9,7 @@ export class CreateUserDto {
   })
   username: string;
 
-  status: 'active';
+  @IsNotEmpty()
+  @MinLength(2)
+  password: string;
 }

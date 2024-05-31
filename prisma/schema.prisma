@@ -18,6 +18,7 @@ model User {
   id  BigInt @id @default(autoincrement())
   username String @db.VarChar(255)
   status String? @db.VarChar(50)
+  password String?
   created_at DateTime @db.Timestamp() @default(now())
   updated_at DateTime @db.Timestamp() @updatedAt
   device Device[]
