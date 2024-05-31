@@ -1,8 +1,9 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseInterceptors } from "@nestjs/common";
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/login-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './service/user.service';
+import { ResponseInterceptor } from '../interceptor/response.interceptor';
 
 @Controller('auth')
 export class AuthController {
@@ -17,8 +18,8 @@ export class AuthController {
   }
 
   @Post('signup')
+  @UseInterceptors(ResponseInterceptor)
   async signup(@Body() data: CreateUserDto) {
-    console.log('test using', data);
     return this.userService.createUser(data);
   }
 }

@@ -5,6 +5,7 @@ import { isUniqueDecorator } from '../decorator/is-unique.decorator';
 import { UserService } from './service/user.service';
 import { PrismaService } from '../service/prisma.service';
 import { IsUsernameNotEmailValidator } from './validator/is-username-exist.validator';
+import { ResponseInterceptor } from '../interceptor/response.interceptor';
 
 @Module({
   providers: [
@@ -13,6 +14,7 @@ import { IsUsernameNotEmailValidator } from './validator/is-username-exist.valid
     isUniqueDecorator,
     PrismaService,
     IsUsernameNotEmailValidator,
+    ResponseInterceptor,
   ],
   controllers: [AuthController],
 })
