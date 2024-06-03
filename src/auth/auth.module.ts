@@ -6,8 +6,18 @@ import { UserService } from './service/user.service';
 import { PrismaService } from '../service/prisma.service';
 import { IsUsernameNotEmailValidator } from './validator/is-username-exist.validator';
 import { ResponseInterceptor } from '../interceptor/response.interceptor';
+import { LoginUsecase } from './usecase/login.usecase';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
+  imports: [
+    PassportModule,
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '60m' },
+    }),
+  ],
   providers: [
     AuthService,
     UserService,
@@ -15,6 +25,7 @@ import { ResponseInterceptor } from '../interceptor/response.interceptor';
     PrismaService,
     IsUsernameNotEmailValidator,
     ResponseInterceptor,
+    LoginUsecase,
   ],
   controllers: [AuthController],
 })

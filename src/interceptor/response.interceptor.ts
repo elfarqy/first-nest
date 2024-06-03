@@ -11,7 +11,7 @@ export class ResponseInterceptor implements NestInterceptor {
       map((data: any) => ({
         statusCode: context.switchToHttp().getResponse().statusCode,
         message: 'Request successful',
-        data: Array.isArray(data) ? data : [data],
+        data: typeof data == 'object' ? data : { data },
       })),
     );
   }
